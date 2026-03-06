@@ -1,7 +1,12 @@
 mod ch02;
+mod ch03;
 
 fn main() {
     println!("Hello, world!");
     //ch02::guess();
-    ch02::guessRand();
+    //ch02::guess_rand();
+    //ch02::guess_loop();
+    //ch03::variables();
+    //ch03::datatypes();
+    ch03::functions();
 }

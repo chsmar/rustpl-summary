@@ -32,12 +32,13 @@ pub fn guess() {    // function without parameters and start body
 // latest versions that fit your specifications in Cargo.toml.
 // $ cargo update
 
-use rand::prelude::*;
+use rand::prelude::*;    // Convenience import of common rand members
+use std::cmp::Ordering;  // Bringing Ordering enum into scope
 
-pub fn guessRand() {
+pub fn guess_rand() {
     println!("Guess the number!");
 
-    let secret_number = rand::rng().random_range(1..=100);
+    let secret_number = rand::rng().random_range(1..=100);  // Inclusive range
 
     println!("The secret number is: {secret_number}");
 
@@ -48,6 +49,59 @@ pub fn guessRand() {
     io::stdin()
         .read_line(&mut guess)
         .expect("Failed to read line");
+    // Shadowing let us reuse guess variable name
+    let guess: u32 = guess.trim().parse().expect("Please type a number!");
+    //               ^^^^^ original String variable
+    // trim(): String method, eliminate any whitespace at the beginning and end.
+    //         guess looks like: "5\n", if the user types 5 and presses enter
+    // parse(): String method, converts a string to another type
+    // Rust will infer that secret_number should be a u32 as well.
+    // Comparison will be between two values of the same type!
+    // expect(..): Result method, when parse return Err variant, 
+    // crash and print the message 
 
     println!("You guessed: {guess}");
+    match guess.cmp(&secret_number) {   // comparing and matching the result
+        Ordering::Less => println!("Too small!"),
+        Ordering::Greater => println!("Too big!"),
+        Ordering::Equal => println!("You win!"),
+    }
+}
+
+// Build documentation provided by all your dependencies locally and open it in your browser.
+// $ cargo doc --open 
+
+// Allowing Multiple Guesses with Looping
+pub fn guess_loop() {
+    println!("Guess the number!");
+
+    let secret_number = rand::rng().random_range(1..=100);
+
+    loop {  // Infinite loop
+        println!("Please input your guess.");
+
+        let mut guess = String::new();
+
+        io::stdin()
+            .read_line(&mut guess)
+            .expect("Failed to read line");
+
+        let guess: u32 = match guess.trim().parse() { // Handling Invalid Input 
+            Ok(num) => num,
+            Err(_) => continue,  // The underscore, _, is a catch-all value;
+            // continue, which tells the program to go to the next iteration of the loop, 
+            // the program ignores all errors that parse might encounter!
+        };
+
+        println!("You guessed: {guess}");
+
+        match guess.cmp(&secret_number) {
+            Ordering::Less => println!("Too small!"),
+            Ordering::Greater => println!("Too big!"),
+            Ordering::Equal => {
+                println!("You win!");
+                break;   // exit the loop
+            }
+        }
+    }
 }
