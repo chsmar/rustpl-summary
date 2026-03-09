@@ -8,5 +8,6 @@ fn main() {
     //ch02::guess_loop();
     //ch03::variables();
     //ch03::datatypes();
-    ch03::functions();
+    //ch03::functions();
+    ch03::controlflow();
 }

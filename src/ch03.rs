@@ -82,9 +82,41 @@ pub fn datatypes() {
 
 pub fn functions() {
     fn print_fn(b: bool) { // parameters: special variables, part of function's signature
-        println!("print funtion: {b}");  // 'Statement' instruction(s) that perform some action 
-        //                               // and do not return a value.
-        
+        //                 // always with type                   
+        println!("start funtion: {b}");  
     }
-    print_fn(true);  // call function
+    // 'Statements' instructions that perform some action and do not return a value.
+    // 'Expressions' evaluate to a resultant value.
+    let a6 = 6;  // '6' is a 'Expression' but the line is a 'Statement'
+    // let b6 = (let a6 = 6); // that's way you can't assign to 'b6'
+    let pr = print_fn(true);  // call function is a 'Expression' even that not defines return
+    // let s = fn some_fn() {};  // Function definition is a 'Statement' not a 'Expression'
+    //                           // that's way you can't assign to 's'
+    let br = {};  // {} block is a 'Expression'
+    println!("function return: {:?}, block return: {:?}", pr, br);
+
+    // Function Return
+    fn think() -> char {  
+        '5'  // expression eq to statement: return '5';
+    }
+}
+
+//  Coment
+/*
+    Comments
+*/
+
+pub fn controlflow() {
+    let condition_exp = 5 > 3;
+    if condition_exp {
+        println!("condition was true");
+    } else {   // optional else
+        println!("condition was false");
+    }
+    let c = 'C';
+    if c == 'A' {
+        println!("A found!");
+    } else if c == 'B' {
+        println!("B found!");
+    } // multiple condition
 }
