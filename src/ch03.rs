@@ -113,10 +113,102 @@ pub fn controlflow() {
     } else {   // optional else
         println!("condition was false");
     }
-    let c = 'C';
-    if c == 'A' {
-        println!("A found!");
-    } else if c == 'B' {
-        println!("B found!");
-    } // multiple condition
+
+    // multiple condition
+    let x = 'X';
+    if x > 'A' {
+        println!("Only executes condition A!");
+    } else if x > 'B' {
+        println!("This never even X > B!");
+    } 
+
+    // if in a let Statement
+    let v = if x == 'X' {[x]} else {[' ']}; // array same size always
+    // else here is required
+
+    // loop
+    use rand::prelude::*;
+    let mut rng = rand::rng();
+    let mut counter = 0;
+    let res = loop {
+        counter += 1;
+        let r = rng.random_range(1..=50);
+        if r == 3 {
+            break counter+1;
+        }
+    };
+    println!("Let statement v: {:?}, loop res: {res}", v);
+
+    // Loop Labels
+    let mut rv = 20;
+    'outloop: loop {
+        loop {
+            if rv < 1 {
+                break 'outloop;  // will exit the outer loop
+            }
+            if rv < 5 {
+                break;  // will exit the inner loop
+            }
+            rv -= 1;
+            if rv > 9 {
+                continue;
+            }
+            rv -= 1;
+        }
+        rv -= 1;
+    }
+    println!("Loop label result: {rv}");
+    
+    // Loops with while
+    let mut a: char = rng.random();
+    print!("while start: {a}");
+    while a != 'a' && a != 'A' && !a.is_numeric() && !a.is_whitespace() {
+        a = rng.random();
+        print!(" {a}");
+    }
+    println!();
+
+    // Looping for
+    for e in "abcd".chars().rev() {
+        println!("For loop Char: '{e}'");
+    }
+}
+
+pub fn practice() {
+    fn fahrenheit_celsius(f: f32) -> f32 {
+        (f - 32.0)*5./9.
+    }
+    println!("100 ºf to ºc: {:?}", fahrenheit_celsius(100.0));
+
+    fn fib(n: u128) -> u128 {
+        fn fib11(a: u128, b: u128, n: u128) -> u128 {
+            if n == 0 {
+                0
+            } else if n < 3 {
+                1
+            } else if n == 3 {
+                a + b
+            } else {
+                fib11(b, a+b, n-1)
+            }
+        }  
+        fib11(1,1,n)
+    }
+    println!("Fibonacci 180th: {}", fib(180));
+
+    println!("\nThe Twelve Days of Christmas\n");
+    let gs = ["a partridge in a pear tree","Two turtle doves","Three French hens","four calling birds","Five gold rings","Six geese a-laying","Seven swans a-swimming","Eight maids a-milking","Nine ladies dancing","Ten lords a-leaping","Eleven pipers piping","Twelve drummers drumming"];
+    let mut gn = 1;
+    for d in ["First","Second","Third","Fourth","Fifth","Sixth","Seventh","Eighth","Ninth","Tenth","Eleventh","Twelfth"] {
+        println!("On the {d} day of Christmas my true love sent to me");
+        for i in 0..gn {
+            let j = i+1;
+            if j == gn && gn > 1 {
+                print!("And ");
+            }
+            println!("{}", gs[gn-j]);
+        }
+        println!();
+        gn += 1;
+    }
 }

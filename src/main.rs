@@ -1,5 +1,6 @@
 mod ch02;
 mod ch03;
+mod ch04;
 
 fn main() {
     println!("Hello, world!");
@@ -9,5 +10,7 @@ fn main() {
     //ch03::variables();
     //ch03::datatypes();
     //ch03::functions();
-    ch03::controlflow();
+    //ch03::controlflow();
+    //ch03::practice();
+    ch04::interacting_move();
 }
