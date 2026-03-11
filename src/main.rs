@@ -12,5 +12,10 @@ fn main() {
     //ch03::functions();
     //ch03::controlflow();
     //ch03::practice();
-    ch04::interacting_move();
+    //ch04::fn_scope();
+    //ch04::string_type();
+    //ch04::move_scope();
+    //ch04::ownership_function();
+    //ch04::references_borrowing();
+    ch04::slice_type();
 }
