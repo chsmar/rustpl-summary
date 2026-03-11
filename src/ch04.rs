@@ -195,5 +195,6 @@ fn fn_mod_calculate_val(v: &mut String) -> i32 { // v reference (&) String type 
 }
 
 pub fn slice_type() {
+    // A slice is a kind of reference a contiguous sequence of elements in a collection.
     
 }
