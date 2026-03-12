@@ -195,6 +195,17 @@ fn fn_mod_calculate_val(v: &mut String) -> i32 { // v reference (&) String type 
 }
 
 pub fn slice_type() {
-    // A slice is a kind of reference a contiguous sequence of elements in a collection.
-    
+    // A slice is a reference to a contiguous sequence of elements in a collection.
+    // Problem: get words from a string
+    // first solucion weak work: 
+    //   - get end indexes of words (5,12)
+    //   - if ws.clear(); // indexes become obsolete
+    // Second solucion: slice
+    let mut ws = String::from("word1 word10 word100");
+    let w1 = &ws[0..5];  // slice 
+    let w2 = &ws[6..12]; // slice
+    // ws.clear();  // clear makes it happen compile time error
+    println!("Slices w1: {w1}, w2: {w2}");
+    // w1{ptr,len} -> ws -> String value
+    // slice's data structure: Fat pointer: {ptr,len} 16bytes
 }
