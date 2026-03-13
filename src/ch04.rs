@@ -204,8 +204,42 @@ pub fn slice_type() {
     let mut ws = String::from("word1 word10 word100");
     let w1 = &ws[0..5];  // slice 
     let w2 = &ws[6..12]; // slice
-    // ws.clear();  // clear makes it happen compile time error
+    // ws.clear();  // clear makes it happen error
     println!("Slices w1: {w1}, w2: {w2}");
-    // w1{ptr,len} -> ws -> String value
+    // w1{ptr,len} -> String value
     // slice's data structure: Fat pointer: {ptr,len} 16bytes
+    
+    // .. range syntax
+    let sref1 = &ws[0..5];
+    let sref2 = &ws[..5];  // sref1 == sref2
+    println!("Equivalent slices: sref1 == sref2 : {}", sref1 == sref2); // true
+
+    let sref3 = &ws[6..ws.len()];
+    let sref4 = &ws[6..];  // sref3 == sref4
+    println!("Equivalent slices: sref3 == sref4 : {}", sref3 == sref4); // true
+
+    let sref5 = &ws[0..ws.len()];
+    let sref6 = &ws[..]; 
+    println!("Equivalent slices: sref5 == sref6 : {}", sref5 == sref6); // true
+
+    ws.push_str("word1000");
+    println!("Updated ws: \"{ws}\". Its slice refrences now are invalid!");
+
+    // String Literals as Slices
+    let str1 = "String Literals as Slices";
+    println!("{str1}");
+
+    // String Slices as Parameters
+    fn take3(str1: &str) -> &str {  // better signature than &String
+        &str1[0..3]
+    }
+    let str19: &str = "123456789";
+    let string19: String = String::from("123456789");
+    println!("take3 works with &str and String: {} {}", take3(str19), take3(&string19));
+
+    // Other Slices
+    let ns = [1,2,3,4,5,6,7,8,9];
+    let ns3 = &ns[0..4];  // slice
+    println!("i32 slice: {:?}", ns3);
+    // Collection slices, ch08
 }
