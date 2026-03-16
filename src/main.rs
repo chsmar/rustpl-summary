@@ -2,6 +2,7 @@ mod ch02;
 mod ch03;
 mod ch04;
 mod ch05;
+mod ch06;
 
 fn main() {
     println!("Hello, world!");
@@ -21,5 +22,6 @@ fn main() {
     //ch04::slice_type();
     //ch05::structs();
     //ch05::funcionality();
-    ch05::methods();
+    //ch05::methods();
+    ch06::enums();
 }

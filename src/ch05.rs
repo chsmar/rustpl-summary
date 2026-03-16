@@ -98,9 +98,12 @@ pub fn methods() {
         title: String,  
         year: u16,      
     }
-    impl Book {
-        fn pub_eq_impl(&self, book2: &Book) -> bool { // pub_eq reimplementation
-            self.year == book2.year
+    impl Book { // implementation block for Book
+        pub fn author(&self) -> &String { // getter method
+            // '&self' instead of book1. Short for 'self: &Self'
+            // Methods can take ownership of 'self' (is rare)
+            // If we wanted to change the instance, use &mut self as the first parameter
+            &self.author
         }
     }
     let b1 = Book {
@@ -111,6 +114,27 @@ pub fn methods() {
         author: String::from("author2"), 
         title: String::from("book2"),  
         year: 2022};
-        println!("Book1 publication eq Book2: {}", b1.pub_eq_impl(&b2));
-}
+    let b1_ref = &b1;
+    let b1_author = b1_ref.author();
+    println!("Book1 author: {}", b1_author);    
+    let b2_author = b2.author(); 
+    // Rust has a feature called 'automatic referencing and dereferencing'.
+    // Calling methods is one of the few places with this behavior.
+    println!("Book2 author: {}", b2_author);
+    
+    impl Book { // Multiple implementation block for Book
+        // Everything within this impl block will be associated with the Book type
+        fn pub_eq_impl(&self, book2: &Book) -> bool { // pub_eq Method reimplementation
+            self.year == book2.year
+        }
 
+        fn book3() -> Self { // Associated Functions
+            // The 'Self' keywords aliases for the type Book
+            Self { author: String::from("author3"), title: String::from("book3"), year: 2023 }
+        }
+    }
+    println!("Book1 publication eq Book2: {}", b1.pub_eq_impl(&b2));
+    let b3 = Book::book3();  // The :: syntax is used for both associated functions and 
+    // namespaces created by modules.
+    println!("Book3 author: {}", b3.author());  
+}
