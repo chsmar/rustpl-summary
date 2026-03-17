@@ -23,5 +23,6 @@ fn main() {
     //ch05::structs();
     //ch05::funcionality();
     //ch05::methods();
-    ch06::enums();
+    //ch06::enums();
+    ch06::match_control();
 }
