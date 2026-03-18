@@ -3,6 +3,7 @@ mod ch03;
 mod ch04;
 mod ch05;
 mod ch06;
+mod ch07;
 
 fn main() {
     println!("Hello, world!");
@@ -24,5 +25,8 @@ fn main() {
     //ch05::funcionality();
     //ch05::methods();
     //ch06::enums();
-    ch06::match_control();
+    //ch06::match_control();
+    //ch06::concise_control();
+    //ch07::use_module();
+    ch07::paths_referring();
 }

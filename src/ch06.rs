@@ -121,8 +121,48 @@ pub fn match_control() {
         match x {
             Some(Size::Small) => Some(Size::Medium), // match arm
             Some(Size::Medium) => Some(Size::Large), // match arm
+            // other => None,  // equivalent '_' // catch-all pattern with bind
             _ => None, // match arm  // catch-all pattern
         }
     }
     println!("Next size simple: {:?}", next_size_placeholder(Some(Size::Large)));
+}
+
+pub fn concise_control() {
+    #[derive(Debug)]
+    enum Size {Small,Medium,Large}
+    fn small_do(x: Size) {
+        // match x {
+        //     Size::Small => println!("Doing something with small size"),
+        //     _ => () // do nothing   // boilerplate
+        //}
+        if let Size::Small = x { // equivalent to match without boilerplate
+            // warning: losing exhaustive checking
+            println!("Doing something with small size");
+        }
+    }
+    small_do(Size::Small);
+    small_do(Size::Medium);
+
+    // The “Happy Path” with let...else
+    enum Knowledge {
+        Drive,
+        Mechanics,
+        Rust(Size)
+    }
+
+    fn rust_assessment(k: Knowledge) -> Option<String> {
+        // let sixe = if let Knowledge::Rust(sixe) = k {
+        //    sixe
+        // } else {
+        //    return None;
+        //};
+        let Knowledge::Rust(sixe) = k else { // more concise than above
+            return None;
+        };
+        Some(format!("Rust assessment: {:?}", sixe))
+    }
+    if let Some(assessment) = rust_assessment(Knowledge::Rust(Size::Large)) {
+        println!("Result: {assessment}");
+    }
 }
