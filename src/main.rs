@@ -28,5 +28,6 @@ fn main() {
     //ch06::match_control();
     //ch06::concise_control();
     //ch07::use_module();
-    ch07::paths_referring();
+    //ch07::paths_referring();
+    ch07::use_keyword();
 }
