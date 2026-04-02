@@ -1,9 +1,10 @@
-mod ch02;
-mod ch03;
-mod ch04;
-mod ch05;
-mod ch06;
-mod ch07;
+//mod ch02;
+//mod ch03;
+//mod ch04;
+//mod ch05;
+//mod ch06;
+//mod ch07;
+mod ch08;
 
 fn main() {
     println!("Hello, world!");
@@ -29,5 +30,7 @@ fn main() {
     //ch06::concise_control();
     //ch07::use_module();
     //ch07::paths_referring();
-    ch07::use_keyword();
+    //ch07::use_keyword();
+    //ch08::vectors();
+    ch08::strings();
 }

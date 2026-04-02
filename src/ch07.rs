@@ -49,12 +49,15 @@ pub fn use_module() {
 // Grouping Related Code in Modules
 mod office { // office es parent of contability, development, sales
     pub mod contability {   // contability nests or child of office
-            #[derive(Debug)]
-            pub struct Account;
+        #[derive(Debug)]
+        pub struct Account;
+        pub fn process_account() {
+            println!("Processing account...");
+        }
     }
     pub mod development {   // development nests or child of office
-            #[derive(Debug)]
-            pub struct Project;
+        #[derive(Debug)]
+        pub struct Project;
     }
     mod sales {         // sales nests or child of office
 
@@ -132,6 +135,60 @@ pub fn use_keyword() {
     use crate::ch07::home::FamilyType; // bring FamilyType into scope
     println!("Family types: {:?}, {:?}, {:?}", FamilyType::Nuclear
     , FamilyType::Extended, FamilyType::SingleParent); 
+    
+    // idiomatic 'use' functions: parent module, others: full path
+    use office::contability::process_account; // no idiomatic 'use'
+    process_account(); // not clear where process_account is defined
+    use office::contability; // idiomatic 'use' for parent module
+    contability::process_account(); // clear where process_account is defined
+    use std::collections::HashMap; // idiomatic 'use': full path because it's a struct
+    let mut _map: HashMap<i32,char> = HashMap::new();
+    use std::fmt;
+    use std::io;
+    let _r1 : fmt::Result;      // exception to idiomatic 'use'
+    let _r2 : io::Result<()>;   // exception to idiomatic 'use'
+    
+    // Providing New Names with 'as'
+    use std::fmt::Result as FmtResult; // rename Result to FmtResult
+    use std::io::Result as IoResult;   // rename Result to IoResult
+    
+    // Re-exporting Names with 'pub use'
+    // useful when the internal structure of your code is different from how programmers calling your code
+    pub use office::development::Project; // re-export Project to make it available to users of this module
+    fn use_re_exported() {
+        let project = Project; // can use Project directly because it's re-exported
+        println!("Use re-exported Project: {:?}", project);
+    }
+    use_re_exported();
+
+    // Using External Packages
+    use rand::Rng; // use Rng trait from rand crate
+
+    // Using Nested Paths to Clean Up Large 'use' Lists
+    use std::cmp::Ordering;
+    use std::io;
+    // can be rewritten as:
+    use std::{cmp::Ordering, io};
+    // 'self' keyword
+    use std::io;
+    use std::io::Write;
+    // can be rewritten as:
+    use std::io::{self, Write};
+
+    // Importing items with Glob Operator
+    use std::collections::*; // import all items from std::collections
+    // be careful with glob operator because it can lead to name conflicts and 
+    // make it harder to understand where items are coming from
 }
 
+// Separating Modules into Different Files
+// mod office {body} // extract modules into files
+//  - src/office.rs  
+//       pub mod contability;
+//       pub mod development;
+//       mod sales;
+//       // with only body of office module
+//  - src/office/contability.rs
+//  - src/office/development.rs
+//  - src/office/sales.rs
 
