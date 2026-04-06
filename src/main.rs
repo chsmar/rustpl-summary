@@ -32,5 +32,6 @@ fn main() {
     //ch07::paths_referring();
     //ch07::use_keyword();
     //ch08::vectors();
-    ch08::strings();
+    //ch08::strings();
+    ch08::hash_maps();
 }
