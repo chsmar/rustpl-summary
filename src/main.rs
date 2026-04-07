@@ -4,7 +4,8 @@
 //mod ch05;
 //mod ch06;
 //mod ch07;
-mod ch08;
+//mod ch08;
+mod ch09;
 
 fn main() {
     println!("Hello, world!");
@@ -33,5 +34,6 @@ fn main() {
     //ch07::use_keyword();
     //ch08::vectors();
     //ch08::strings();
-    ch08::hash_maps();
+    //ch08::hash_maps();
+    ch09::unrecoverable_errors();
 }
