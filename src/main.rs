@@ -35,5 +35,6 @@ fn main() {
     //ch08::vectors();
     //ch08::strings();
     //ch08::hash_maps();
-    ch09::unrecoverable_errors();
+    //ch09::unrecoverable_errors();
+    ch09::recoverable_errors();
 }
