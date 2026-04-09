@@ -109,3 +109,37 @@ pub fn recoverable_errors() {
 }
  
 // To panic! or Not to panic!
+// when you should call panic! and when you should return Result?
+// Result value: guive calling code options
+//               a good default choice
+//               when failure is expected 
+// Unrecoverable: in examples, prototipes and tests code
+//                aceptable use methods like 'unwrap' and 'expect'
+//                tests uses 'panic!'
+//                When a particular situation never have an 'Err' variant 
+// a 'bad state' could end up in a panic! when:
+// invalid, contradictory or missing values are passed to code and/or:
+//   - The 'bad state' is something unexpected, not likelly happen occasionally like wrong format.
+//   - The code needs to rely on not being in this bad state
+//   - There’s not a good way to encode this information
+// Where continuing could be insecure or harmful, the best choice might be to call panic!
+// or calling external code that is out of your control. Alert the person using your library
+// When the 'contract' (input requirements) is violated makes sense panic! because a contract violation 
+// always indicates a caller-side bug
+
+// Custom Types for Validation
+pub struct Guess { // type for numbers from 1 to 100
+    value: i32,
+}
+impl Guess {
+    pub fn new(value: i32) -> Guess {
+        if value < 1 || value > 100 {  // validation
+            panic!("Guess value must be between 1 and 100, got {value}."); // todo: add indication of the 
+            // value that caused the panic in the API documentation
+        }
+        Guess { value }
+    }
+    pub fn value(&self) -> i32 {
+        self.value
+    }
+}
