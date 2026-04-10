@@ -5,7 +5,8 @@
 //mod ch06;
 //mod ch07;
 //mod ch08;
-mod ch09;
+//mod ch09;
+mod ch10;
 
 fn main() {
     println!("Hello, world!");
@@ -36,5 +37,7 @@ fn main() {
     //ch08::strings();
     //ch08::hash_maps();
     //ch09::unrecoverable_errors();
-    ch09::recoverable_errors();
+    //ch09::recoverable_errors();
+    //ch10::generic_types();
+    ch10::shared_behavior_with_traits();
 }
