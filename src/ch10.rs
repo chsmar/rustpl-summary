@@ -146,5 +146,78 @@ pub fn shared_behavior_with_traits() {
     // use some_module::{NewsArticle, Summary};  // to use, include both
     // One restriction to note is that we can implement a trait on a type only if either the 
     // trait or the type, or both, are local to our crate.
-    
+    // These restrictions called 'coherence', 'orphan rule': parent type is not present.
+
+    // Using default implementation:
+    pub trait Editable {
+        fn edit(&self) -> bool { // default implementation
+            false
+        }
+    }
+    impl Editable for NewsArticle {} // use default implementation of edit method
+
+    // Using Traits as Parameters
+    pub fn notify(item: &impl Summary) {
+        println!("Breaking news! {}", item.summarize());
+    }
+    // Trait Bound Syntax
+    pub fn notify2<T: Summary>(item: &T) {
+        println!("Breaking news! {}", item.summarize());
+    }
+    // Multiple Trait Bounds with the + Syntax
+    pub fn notify3(item: &(impl Summary + Editable)) {
+        println!("Breaking news! {}", item.summarize());
+    }
+    pub fn notify4<T: Summary + Editable>(item: &T) {
+        println!("Breaking news! {}", item.summarize());
+    }
+    // Clearer Trait Bounds with 'where' Clauses
+    pub fn notify5<T>(item: &T) 
+        where T: Summary + Editable { // 'where' clause after the function signature.
+        println!("Breaking news! {}", item.summarize());
+    }
+
+    // Returning Types that Implement Traits
+    pub fn returns_summarizable() -> impl Summary {
+        NewsArticle {
+            headline: String::from("Penguins win the Stanley Cup Championship!"),
+            location: String::from("Pittsburgh, PA, USA"),
+            author: String::from("Iceburgh"),
+            content: String::from("The Pittsburgh Penguins once again are the best hockey team in the NHL."),
+        }
+    }
+    // fn returns_summarizable(switch: bool) -> impl Summary { // use 'impl' Trait if you’re returning a single type.
+    //     if switch {                                         // Returning either a NewsArticle or a Tweet isn’t allowed
+    //         NewsArticle {...}
+    //     } else {
+    //         Tweet {...}
+    //     }
+    // }
+
+    // Using Trait Bounds to Conditionally Implement Methods
+    use std::fmt::Display;
+    struct Pair<T> { x: T, y: T }
+    impl<T> Pair<T> {
+        fn new(x: T, y: T) -> Self {
+            Self { x, y }
+        }
+    }
+    impl<T: Display + PartialOrd> Pair<T> {
+        fn cmp_display(&self) {
+            if self.x >= self.y {
+                println!("The largest member is x = {}", self.x);
+            } else {
+                println!("The largest member is y = {}", self.y);
+            }
+        }
+    }
+    let pair = Pair::new(3, 5);
+    pair.cmp_display();
+
+    // Implementing a Trait on a Trait: 'blanket implementations'
+    // impl<T: Display> ToString for T { 
+        //...
+    // }
+    // we can call the 'to_string' method defined by the 'ToString' trait on 
+    // any type that implements the 'Display' trait.
 }
