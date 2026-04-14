@@ -39,5 +39,6 @@ fn main() {
     //ch09::unrecoverable_errors();
     //ch09::recoverable_errors();
     //ch10::generic_types();
-    ch10::shared_behavior_with_traits();
+    //ch10::shared_behavior_with_traits();
+    ch10::lifetimes();
 }

@@ -221,3 +221,83 @@ pub fn shared_behavior_with_traits() {
     // we can call the 'to_string' method defined by the 'ToString' trait on 
     // any type that implements the 'Display' trait.
 }
+
+// Validating References with Lifetimes
+// Every reference in Rust has a lifetime. 
+// Most of the time, lifetimes are implicit and inferred.
+pub fn lifetimes() {
+    // Dangling References:
+    //let r;
+    //{
+    //    let x = 5;
+    //    r = &x;
+    //}
+    //println!("r: {r}"); // An attempt to use a reference whose value has gone out of scope.
+    // If Rust allowed this code to work, 'r' would be referencing memory that was deallocated.
+
+    // The Borrow Checker:
+    // compares scopes to determine whether all borrows are valid.
+    // Annotations of the lifetimes of r and x, named 'a and 'b, respectively:
+    //fn f1() {
+    //    let r;                // ---------+-- 'a
+    //    {                     //          |
+    //        let x = 5;        // -+-- 'b  |
+    //        r = &x;           //  |       |
+    //    }                     // -+       |
+    //    println!("r: {r}");   //          |
+    //}                         // ---------+
+    // The program is rejected because 'b is shorter than 'a: 
+    // The subject of the reference doesn’t live as long as the reference.
+    fn f1() {
+        let x: i32 = 5;            // ----------+-- 'b
+                                   //           |
+        let r: &i32 = &x;          // --+-- 'a  |
+                                   //   |       |
+        println!("r: {r}");        // --+       |
+    }                              // ----------+
+    // Here, x has the lifetime 'b, which in this case is larger than 'a. 
+    // This means r can reference x
+
+    // Generic Lifetimes in Functions:
+    //fn longest(x: &str, y: &str) -> &str {  // error: missing lifetime specifier
+    //    if x.len() > y.len() { x } else { y }
+    //}
+    // We can’t tell whether the reference being returned refers to 'x' or 'y'.
+    // The borrow checker can’t determine this either, because it doesn’t know how the lifetimes of 
+    // 'x' and 'y' relate to the lifetime of the return value.
+
+    // Lifetime Annotation Syntax:
+    // describe the relationships of the lifetimes of multiple references to each other without affecting the lifetimes.
+    //&i32        // a reference
+    //&'a i32     // a reference with an explicit lifetime
+    //&'a mut i32 // a mutable reference with an explicit lifetime
+    // In Function Signatures: 'longest'
+    // - declare the generic lifetime parameters inside angle brackets.
+    // - The returned reference will be valid as long as both of the parameters are valid.
+    // - This is the relationship between lifetimes of the parameters and the return value.
+    fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+        if x.len() > y.len() { x } else { y }
+    }
+    // The generic lifetime 'a will get the concrete lifetime that is equal to the smaller of the lifetimes of x and y.
+    // The returned reference will also be valid for the length (durante) of the smaller of the lifetimes of x and y.
+    fn max<'a>(x: &'a i32, y: &'a i32, z: &'a i32) -> &'a i32 {
+        if x > y { if x > z { x } else { z } } else { if y > z { y } else { z } }
+    }
+    {
+        let x = 45;
+        let result;
+        {// inner scope
+            let y = 50;
+            {// innermost scope
+                let z = 40;
+                result = max(&x, &y, &z);
+                println!("max of x, y, z is {}", result);
+            }
+            //println!("max of x, y, z is {}", result); // error: `z` does not live long enough
+        }
+        //println!("max of x, y, z is {}", result); // error: `y` does not live long enough  
+    }
+
+    // Relationships
+
+}
