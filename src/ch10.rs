@@ -299,5 +299,38 @@ pub fn lifetimes() {
     }
 
     // Relationships
+    // When returning a reference from a function, the lifetime parameter for the return type needs to match the 
+    // lifetime parameter for one of the parameters. In other case return an owned data type rather than a reference.
+
+    // In Struct Definitions
+    struct ImportantExcerpt<'a> {
+        part: &'a str,
+    }
+    {
+        let ie : ImportantExcerpt;
+        {
+            let novel = String::from("Call me Ishmael. Some years ago...");
+            ie = ImportantExcerpt { part: &novel[0..20] };
+            println!("important excerpt: {}", ie.part);
+        }
+        //println!("important excerpt: {}", ie.part); // error: `novel` does borrow later used here
+    }
+
+    // Lifetime Elision
+    fn first_word(s: &str) -> &str {
+        let bytes = s.as_bytes();
+        for (i, &item) in bytes.iter().enumerate() {
+            if item == b' ' {
+                return &s[0..i];
+            }
+        }
+        &s[..]
+    }
+    // The reason this function compiles without lifetime annotations is historical:
+    // Rust programmers were entering the same lifetime annotations over and over in particular situations.
+    // These patterns are programmed into Rust’s analysis of references, called the 'lifetime elision rules'.
+    // Lifetimes on function or method parameters are called 'input lifetimes', and lifetimes on return 
+    // values are called 'output lifetimes'.
+    // Rule 1: 
 
 }
