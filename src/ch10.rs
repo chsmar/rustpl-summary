@@ -331,6 +331,6 @@ pub fn lifetimes() {
     // These patterns are programmed into Rust’s analysis of references, called the 'lifetime elision rules'.
     // Lifetimes on function or method parameters are called 'input lifetimes', and lifetimes on return 
     // values are called 'output lifetimes'.
-    // Rule 1: 
+    // Rule 1: the compiler assigns a lifetime parameter to each parameter that’s a reference. 
 
 }
