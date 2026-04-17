@@ -331,6 +331,22 @@ pub fn lifetimes() {
     // These patterns are programmed into Rust’s analysis of references, called the 'lifetime elision rules'.
     // Lifetimes on function or method parameters are called 'input lifetimes', and lifetimes on return 
     // values are called 'output lifetimes'.
+    // If the compiler gets to the end of the three rules and there are still references for which it can’t figure out 
+    // lifetimes, the compiler will stop with an error.
     // Rule 1: the compiler assigns a lifetime parameter to each parameter that’s a reference. 
-
+    // Rule 2: if there is exactly one input lifetime parameter, that lifetime is assigned to all output lifetime parameters.
+    // "fn foo<'a>(x: &'a i32) -> &'a i32"
+    // Rule 3: if there are multiple input lifetime parameters, but one of them is '&self' or '&mut self' because this is a 
+    // method, the lifetime of self is assigned to all output lifetime parameters.
+    // Appling Rules:
+    // fn first_word(s: &str) -> &str   
+    // fn first_word<'a>(s: &'a str) -> &str       // Rule 1
+    // fn first_word<'a>(s: &'a str) -> &'a str    // Rule 2
+    // Now all the references in this function signature have lifetimes, and the compiler can 
+    // continue its analysis without needing the programmer to annotate the lifetimes in this function signature.
+    // fn longest(x: &str, y: &str) -> &str
+    // fn longest<a', b'>(x: &'a str, &'b str) -> &str      // Rule 1
+    // Rule 2: doesn't apply
+    // Rule 3: doesn't apply
+    // 
 }
