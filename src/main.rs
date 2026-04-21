@@ -6,7 +6,8 @@
 //mod ch07;
 //mod ch08;
 //mod ch09;
-mod ch10;
+//mod ch10;
+mod ch11;
 
 fn main() {
     println!("Hello, world!");
@@ -40,5 +41,5 @@ fn main() {
     //ch09::recoverable_errors();
     //ch10::generic_types();
     //ch10::shared_behavior_with_traits();
-    ch10::lifetimes();
+    //ch10::lifetimes();
 }

@@ -348,5 +348,25 @@ pub fn lifetimes() {
     // fn longest<a', b'>(x: &'a str, &'b str) -> &str      // Rule 1
     // Rule 2: doesn't apply
     // Rule 3: doesn't apply
-    // 
+    // Haven’t figured out what the return type’s lifetime is. Error.
+
+    // In Method Definitions
+    //impl<'a> ImportantExcerpt<'a> {
+    //   fn announce_and_return_part(&self, announcement: &str) -> &str {
+    //      println!("Attention please: {announcement}");
+    //      self.part
+    //   }
+    //}
+    // because one of the parameters is '&self', the return type gets the lifetime of '&self' (Rule 3)
+
+    // The Static Lifetime ('static)
+    // reference can live for the entire duration of the program
+    let s01: &'static str = "I have a static lifetime.";
+
+    // Generic Type Parameters, Trait Bounds, and Lifetimes
+    fn longest_with_an_announcement<'a, T>(x: &'a str, y: &'a str, ann: T) -> &'a str
+    where T: Display {
+        println!("Announcement! {ann}");
+        if x.len() > y.len() { x } else { y }
+    }
 }
