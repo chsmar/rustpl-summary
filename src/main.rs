@@ -7,7 +7,8 @@
 //mod ch08;
 //mod ch09;
 //mod ch10;
-pub mod ch11;
+//mod ch11;
+mod ch12;
 
 fn main() {
     println!("Hello, world!");
@@ -42,4 +43,5 @@ fn main() {
     //ch10::generic_types();
     //ch10::shared_behavior_with_traits();
     //ch10::lifetimes();
+    ch12::minigrep();
 }
